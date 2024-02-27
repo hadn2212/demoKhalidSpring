@@ -3,10 +3,10 @@ pipeline {
     agent any
 
     tools { 
-        maven 'my-maven' 
+        maven 'khalidLabMaven' 
     }
     environment {
-        MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
+        MYSQL_ROOT_LOGIN = credentials('mysql-root-khalidLab')
     }
     stages {
 
@@ -21,9 +21,9 @@ pipeline {
         stage('Packaging/Pushing imagae') {
 
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t khaliddinh/springboot .'
-                    sh 'docker push khaliddinh/springboot'
+                withDockerRegistry(credentialsId: 'dockerhub-khalidLab', url: 'https://index.docker.io/v1/') {
+                    sh 'docker build -t ngocha2212/springbootKhalid .'
+                    sh 'docker push ngocha2212/springbootKhalid'
                 }
             }
         }
@@ -46,12 +46,12 @@ pipeline {
         stage('Deploy Spring Boot to DEV') {
             steps {
                 echo 'Deploying and cleaning'
-                sh 'docker image pull khaliddinh/springboot'
-                sh 'docker container stop khalid-springboot || echo "this container does not exist" '
+                sh 'docker image pull ngocha2212/springbootKhalid'
+                sh 'docker container stop ngocha2212-springbootKhalidCont || echo "this container does not exist" '
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'echo y | docker container prune '
 
-                sh 'docker container run -d --rm --name khalid-springboot -p 8081:8080 --network dev khaliddinh/springboot'
+                sh 'docker container run -d --rm --name ngocha2212-springbootKhalidCont -p 8081:8080 --network dev ngocha2212/springbootKhalid'
             }
         }
  
