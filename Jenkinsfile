@@ -12,8 +12,11 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
+				echo 'Build 1'
                 sh 'mvn --version'
+				echo 'Build 2'
                 sh 'java -version'
+				echo 'Build 3'
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
@@ -21,8 +24,11 @@ pipeline {
         stage('Packaging/Pushing imagae') {
 
             steps {
+				echo 'Build 4'
                 withDockerRegistry(credentialsId: 'dockerhub-khalidLab', url: 'https://index.docker.io/v1/') {
+					echo 'Build 5'
                     sh 'docker build -t ngocha2212/springbootKhalid .'
+					echo 'Build 6'
                     sh 'docker push ngocha2212/springbootKhalid'
                 }
             }
