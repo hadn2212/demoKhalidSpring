@@ -27,7 +27,7 @@ pipeline {
 				echo 'Build 4'
                 withDockerRegistry(credentialsId: 'dockerhub-khalidLab', url: 'https://index.docker.io/v1/') {
 					echo 'Build 5'
-                    sh 'docker build -t ngocha2212/springbootlhalid .'
+                    sh 'docker build -t ngocha2212/springbootkhalid .'
 					echo 'Build 6'
                     sh 'docker push ngocha2212/springbootkhalid'
                 }
@@ -53,11 +53,11 @@ pipeline {
             steps {
                 echo 'Deploying and cleaning'
                 sh 'docker image pull ngocha2212/springbootkhalid'
-                sh 'docker container stop ngocha2212-springbootkhalidCont || echo "this container does not exist" '
+                sh 'docker container stop ngocha2212-springbootKhalidCont || echo "this container does not exist" '
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'echo y | docker container prune '
 
-                sh 'docker container run -d --rm --name ngocha2212-springbootkhalidCont -p 8081:8080 --network dev ngocha2212/springbootkhalid'
+                sh 'docker container run -d --rm --name ngocha2212-springbootKhalidCont -p 8081:8080 --network dev ngocha2212/springbootkhalid'
             }
         }
  
