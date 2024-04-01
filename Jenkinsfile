@@ -64,11 +64,11 @@ pipeline {
         }
  
     }
-    post {
+//    post {
         // Clean after build
-        always {
-            cleanWs(
-				deleteDirs: false)
-        }
-    }
+//        always {
+//            cleanWs(
+//				deleteDirs: )
+//        }
+//    }
 }
