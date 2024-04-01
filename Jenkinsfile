@@ -39,7 +39,8 @@ pipeline {
                 echo 'Deploying and cleaning'
                 sh 'docker image pull mysql:8.0'
                 sh 'docker network create dev || echo "this network exists"'
-                sh 'docker container stop khalid-mysql || echo "this container does not exist" '
+//                sh 'docker container stop khalid-mysql || echo "this container does not exist" '
+				sh 'docker container rm -f khalid-mysql'
 //                sh 'echo y | docker container prune '
                 sh 'docker volume rm khalid-mysql-data || echo "no volume"'
 
@@ -54,7 +55,8 @@ pipeline {
             steps {
                 echo 'Deploying and cleaning'
                 sh 'docker image pull ngocha2212/springbootkhalid'
-                sh 'docker container stop ngocha2212-springbootKhalidCont || echo "this container does not exist" '
+//                sh 'docker container stop ngocha2212-springbootKhalidCont || echo "this container does not exist" '
+				sh 'docker container rm -f ngocha2212-springbootKhalidCont'
                 sh 'docker network create dev || echo "this network exists"'
 //                sh 'echo y | docker container prune '
 
