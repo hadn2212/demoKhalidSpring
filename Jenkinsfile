@@ -44,7 +44,7 @@ pipeline {
 //                sh 'echo y | docker container prune '
                 sh 'docker volume rm khalid-mysql-data || echo "no volume"'
 
-                sh "docker run --name khalid-mysql --network dev -v khalid-mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=db_example  -d mysql:8.0 "
+                sh "docker run --name khalid-mysql --network dev -v khalid-mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=db_example -p 33060:33060 -p 3306:3306 -d mysql:8.0 "
 //				--rm \
                 sh 'sleep 20'
                 sh "docker exec -i khalid-mysql mysql --user=root --password=${MYSQL_ROOT_LOGIN_PSW} < script"
@@ -54,6 +54,7 @@ pipeline {
         stage('Deploy Spring Boot to DEV') {
             steps {
                 echo 'Deploying and cleaning'
+				sh 'docker image rmi ngocha2212/springbootkhalid'
                 sh 'docker image pull ngocha2212/springbootkhalid'
 //                sh 'docker container stop ngocha2212-springbootKhalidCont || echo "this container does not exist" '
 				sh 'docker container rm -f ngocha2212-springbootKhalidCont'
